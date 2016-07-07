@@ -24,7 +24,6 @@ harvester = new LogHarvester config
 harvester.run()
 
 ###
-
 fs = require 'fs'
 net = require 'net'
 events = require 'events'
