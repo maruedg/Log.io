@@ -1,17 +1,3 @@
-### Log.io Web Client
-
-Listens to server for new log messages, renders them to screen "widgets".
-
-# Usage:
-wclient = new WebClient io, host: 'http://localhost:28778'
-screen = wclient.createScreen
-stream = wclient.logStreams.at 0
-node = wclient.logNodes.at 0
-screen.addPair stream, node
-screen.on 'new_log', (stream, node, level, message) ->
-
-###
-
 if process.browser
   $ = require 'jquery-browserify'
 else
@@ -22,14 +8,7 @@ io = require 'socket.io-client'
 _ = require 'underscore'
 templates = require './templates'
 
-# Cap LogMessages collection size
 MESSAGE_CAP = 5000
-
-###
-ColorManager acts as a circular queue for color values.
-Every new Stream or Node is assigned a color value on instantiation.
-
-###
 
 class ColorManager
   _max: 20
