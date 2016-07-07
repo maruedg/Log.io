@@ -1,15 +1,15 @@
 {spawn, exec} = require 'child_process'
 fs = require 'fs'
 
-ENV = '/usr/bin/env'
+ENV = ''
 BROWSERIFY = "#{ ENV } browserify"
 COFFEE = "#{ ENV } coffee"
 MOCHA = "#{ ENV } mocha"
 LESS = "#{ ENV } lessc"
 NODE = "#{ ENV } node"
 
-TEMPLATE_SRC = "#{ __dirname }/templates"
-TEMPLATE_OUTPUT = "#{ __dirname }/src/templates.coffee"
+TEMPLATE_SRC = "./templates"
+TEMPLATE_OUTPUT = "./src/templates.coffee"
 
 task 'build', "Builds Log.io package", ->
   invoke 'templates'
@@ -21,18 +21,18 @@ task 'build', "Builds Log.io package", ->
 
 task 'compile', "Compiles CoffeeScript src/*.coffee to lib/*.js", ->
   console.log "Compiling src/*.coffee to lib/*.js"
-  exec "#{COFFEE} --compile --output #{__dirname}/lib/ #{__dirname}/src/", (err, stdout, stderr) ->
+  exec "#{COFFEE} --compile --output ./lib/ ./src/", (err, stdout, stderr) ->
     throw err if err
     console.log stdout + stderr if stdout + stderr
 
 task 'browserify', "Compiles client.coffee to browser-friendly JS", ->
   console.log "Browserifying src/client.coffee to lib/log.io.js"
-  exec "#{BROWSERIFY} src/client.coffee --exports process,require -o #{ __dirname }/lib/log.io.js", (err, stdout, stderr) ->
+  exec "#{BROWSERIFY} src/client.coffee --exports process,require -o ./lib/log.io.js", (err, stdout, stderr) ->
     console.log stdout + stderr if err
 
 task 'less', "Compiles less templates to CSS", ->
   console.log "Compiling src/less/* to lib/log.io.css"
-  exec "#{LESS} #{__dirname}/src/less/log.io.less -compress -o #{__dirname}/lib/log.io.css", (err, stdout, stderr) ->
+  exec "#{LESS} ./src/less/log.io.less -compress -o ./lib/log.io.css", (err, stdout, stderr) ->
     throw err if err
     console.log stdout + stderr if stdout + stderr
 
@@ -52,7 +52,7 @@ task 'ensure:configuration', "Ensures that config files exist in ~/.log.io/", ->
 
 task 'func_test', "Compiles & runs functional tests in test/", ->
   console.log "Compiling test/*.coffee to test/lib/*.js..."
-  exec "#{COFFEE} --compile --output #{__dirname}/test/lib/ #{__dirname}/test/", (err, stdout, stderr) ->
+  exec "#{COFFEE} --compile --output ./test/lib/ ./test/", (err, stdout, stderr) ->
     throw err if err
     console.log stdout + stderr if stdout + stderr
     console.log "Running tests..."
